@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EventType {
+  VISIT
+  CLICK
+  SCROLL
+}
+
+model ActivityEvent {
+  id          String    @id @default(cuid())
+  type        EventType
+  url         String
+  tabId       Int
+  elementInfo String?
+  scrollDepth Int?
+  occurredAt  DateTime
+  createdAt   DateTime  @default(now())
+}
